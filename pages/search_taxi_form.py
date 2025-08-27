@@ -35,4 +35,8 @@ class SearchTaxiFormPage(BasePage):
     def wait_timer_end(self):
         self.wait_text_is_visible(SearchTaxiFormLocators.TIMER_TAXI, "00:01")
         self.wait_change_of_element(SearchTaxiFormLocators.TIMER_TAXI, "00:01")
+        
+    @allure.step("Нажать на кнопку 'ввести номер и заказать'")
+    def click_button_get_taxi(self):
+        self.click_element(GetTaxiLocators.EXTRA_BUTTON_GET_TAXI)
     

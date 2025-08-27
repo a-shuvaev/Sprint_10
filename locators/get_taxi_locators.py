@@ -9,7 +9,7 @@ class GetTaxiLocators:
     ACTIVE_TITLE_INFO = (By.XPATH, ".//div[@class='tcard active']//div[@class = 'i-title']")
     ACTIVE_DESCRIPTION_INFO = (By.XPATH, ".//div[@class='tcard active']//div[@class = 'i-dPrefix']")
     ACTIVE_PRICE_INFO = (By.XPATH, ".//div[@class='tcard active']//div[@class = 'tcard-price']")
-
+    
     BUTTON_TARIFF_WORK = (By.XPATH, ".//div[@class='tariff-cards']/div/div[text()='Рабочий']")
     BUTTON_TARIFF_SLEEP = (By.XPATH, ".//div[@class='tariff-cards']/div/div[text()='Сонный']")
     BUTTON_TARIFF_VACATION = (By.XPATH, ".//div[@class='tariff-cards']/div/div[text()='Отпускной']")

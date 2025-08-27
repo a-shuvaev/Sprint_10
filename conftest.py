@@ -52,7 +52,6 @@ def open_search_taxi_form(open_panel_tarrif_taxi):
     page = GetTaxiPage(open_panel_tarrif_taxi)
     page.click_button_tariff_work()
     page.click_icon_arrow_requirements()
-    # page.scroll_to_bottom_page()
     page.switch_laptop_table()
     page.click_button_get_taxi()
     yield open_panel_tarrif_taxi

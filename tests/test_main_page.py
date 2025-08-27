@@ -7,16 +7,20 @@ class TestMainPage:
     
     @allure.title("Тест вотображения точек на карте")
     @allure.description("При вводе двух разных предустановленных адресов в поля 'Откуда' и 'Куда' на карте отображаются две точки начала и конца маршрута")
-    def test_points_on_map(self, enter_addresses):
-        page = MainPage(enter_addresses)
+    def test_points_on_map(self, driver):
+        page = MainPage(driver)
+        page.input_address_from(Data.ADDRESS_FROM)
+        page.input_address_to(Data.ADDRESS_FROM)
         points = page.get_list_points_on_map()
         
         assert len(points) == 2
         
     @allure.title("Тест отображения панели выбора маршрута")    
     @allure.description("При вводе двух разных предустановленных адресов в поля 'Откуда' и 'Куда' под выбором адресов отображается блок с выбором маршрута")
-    def test_panel_choose_route_visible(self, enter_addresses):
-        page = MainPage(enter_addresses)
+    def test_panel_choose_route_visible(self, driver):
+        page = MainPage(driver)
+        page.input_address_from(Data.ADDRESS_FROM)
+        page.input_address_to(Data.ADDRESS_FROM)
         
         assert page.is_panel_choose_route_visible()
     
@@ -27,29 +31,40 @@ class TestMainPage:
         page.input_address_from(Data.ADDRESS_FROM)
         page.input_address_to(Data.ADDRESS_FROM)
         
-        assert (page.get_text_description() == Data.TEXT_DESCRIPTION_SAME_ADRESS and
-               page.get_text_duration() == Data.TEXT_DURATION_SAME_ADRESS)
+        assert page.get_text_description() == Data.TEXT_DESCRIPTION_SAME_ADRESS
+        assert page.get_text_duration() == Data.TEXT_DURATION_SAME_ADRESS
     
-    @pytest.mark.parametrize('click_tab,get_text_tab',[
-        (MainPage.click_tab_optimal, Data.TEXT_TAB_OPTIMAL_ROUTE),
-        (MainPage.click_tab_fast, Data.TEXT_TAB_FAST_ROUTE)
-    ])
-    @allure.title("Тест переключения тарифа на оптимальный/быстрый")
-    @allure.description("При переключении между видами маршрута (Оптимальный\Быстрый) происходит смена активного таба и пересчет времени и стоимости маршрута")
-    def test_switch_route_tabs(self, choose_scooter_route, click_tab, get_text_tab):
+    @allure.title("Тест переключения тарифа на быстрый")
+    def test_switch_route_tabs_fast(self, choose_scooter_route):
         page = MainPage(choose_scooter_route)
         
         old_description = page.get_text_description()
         old_duration = page.get_text_duration()
         
-        click_tab(page)
+        page.click_tab_fast()
         new_tab_title = page.get_text_from_active_tab()
         new_description = page.get_text_description()
         new_duration = page.get_text_duration()
         
-        assert (new_tab_title == get_text_tab and
-                old_description != new_description and
-                old_duration != new_duration)
+        assert new_tab_title == Data.TEXT_TAB_FAST_ROUTE
+        assert old_description != new_description
+        assert old_duration != new_duration
+        
+    @allure.title("Тест переключения тарифа на оптимальный")
+    def test_switch_route_tabs_optimal(self, choose_scooter_route):
+        page = MainPage(choose_scooter_route)
+        
+        old_description = page.get_text_description()
+        old_duration = page.get_text_duration()
+        
+        page.click_tab_optimal()
+        new_tab_title = page.get_text_from_active_tab()
+        new_description = page.get_text_description()
+        new_duration = page.get_text_duration()
+        
+        assert new_tab_title == Data.TEXT_TAB_OPTIMAL_ROUTE
+        assert old_description != new_description
+        assert old_duration != new_duration
     
     @allure.title("Тест переключения на маршрут 'Свой'")
     @allure.description("При переключении на вид маршрута Свой происходит смена активного таба и становятся активны типы передвижения (Машина, Пешком, Такси, Велосипед, Самокат, Драйв)")

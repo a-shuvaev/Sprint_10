@@ -18,3 +18,4 @@ class FinishOrderTaxiFormLocators:
     TEXT_BUTTON_DETAILS = (By.XPATH, ".//div[text()='Детали']")
 
     TEXT_PRICE = (By.XPATH, ".//*[text()='Стоимость - ']")
+    TIMER_TAXI = (By.XPATH, ".//*[@class='order-header-time']")

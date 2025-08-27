@@ -32,7 +32,6 @@ class GetTaxiPage(BasePage):
             return True
         
         return False
-
     
     @allure.step("Нажать на тариф рабочий")
     def click_button_tariff_work(self):
